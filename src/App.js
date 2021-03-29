@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
+import api from './utils/api/api';
 import axios from 'axios';
+import FormTextInput from './components/FormTextInput';
+import RegisterScreen from './screens/RegisterScreen';
+import LoginScreen from './screens/LoginScreen';
 
 function App() {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  const [message, setMessage] = useState('waiting for response');
 
   const request = () => {
-    axios
-      .post('http://localhost/programming-lab-project-restaurant/restaurant-backend/api/bep.php', {
-        name: name,
-        surname: surname,
+    // axios
+    //   .post('http://localhost/repos/restaurant/restaurant-backend/api/bep.php', {
+    //     name: name,
+    //     surname: surname,
+    //   })
+    //   .then((res) => console.log(res.data.name))
+    //   .catch((err) => console.log(err));
+    api
+      .register(name, surname)
+      .then((res) => {
+        // setMessage(res);
       })
-      .then((res) => console.log(res.data.name))
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
 
   const onclick = (e) => {
@@ -21,28 +32,40 @@ function App() {
   };
 
   const onChangeName = (e) => {
-    setName((prev) => prev + e.nativeEvent.data);
+    setName(e.target.value);
   };
 
   const onChangeSurname = (e) => {
-    setSurname((prev) => prev + e.nativeEvent.data);
+    setSurname(e.target.value);
   };
 
   return (
+    // <>
+    //   <input
+    //     type="text"
+    //     name={'name'}
+    //     id={'name'}
+    //     onChange={(e) => onChangeName(e)}
+    //     value={name}
+    //     autoComplete={'off'}
+    //   />
+    //   <input
+    //     type="text"
+    //     name={'surname'}
+    //     id={'surname'}
+    //     onChange={(e) => onChangeSurname(e)}
+    //     value={surname}
+    //     autoComplete={'off'}
+    //   />
+    //   <FormTextInput name={'email'} id={'email'} />
+    //   <button type={'submit'} onClick={(e) => onclick(e)}>
+    //     Login
+    //   </button>
+    //   <p>{message}</p>
+    // </>
     <>
-      <form
-        action={
-          'https://localhost:80/programming-lab-project-restaurant/restaurant-backend/api/login.php'
-        }
-        method={'POST'}
-      >
-        <input type="text" name={'name'} id={'name'} onChange={(e) => onChangeName(e)} />
-        <input type="text" name={'surname'} id={'surname'} onChange={(e) => onChangeSurname(e)} />
-        <button type={'submit'} onClick={(e) => onclick(e)}>
-          Login
-        </button>
-        <p>{name}</p>
-      </form>
+      <RegisterScreen />
+      <LoginScreen />
     </>
   );
 }

@@ -1,4 +1,5 @@
 module.exports = {
+  parser: 'babel-eslint',
   extends: [
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
@@ -20,6 +21,7 @@ module.exports = {
   rules: {
     'no-unused-vars': ['warn', { args: 'none', argsIgnorePattern: 'req|res|next|val' }],
     'prettier/prettier': ['warn'],
+    'react/prop-types': 0,
   },
   settings: {
     react: {
