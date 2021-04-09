@@ -2,12 +2,12 @@ import React from 'react';
 
 import styles from './styles';
 
-const MainScreen = (props) => {
+const ErrorMessage = (props) => {
   return (
     <div>
-      <h1>Main screen</h1>
+      <p>{props.message}</p>
     </div>
   );
 };
 
-export default MainScreen;
+export default ErrorMessage;

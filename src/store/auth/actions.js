@@ -1,5 +1,6 @@
 import AUTH from './actionTypes';
 import api from '../../utils/api/api';
+import { setUserId } from '../user/actions';
 
 const userRegistrationStarted = () => {
   return {
@@ -20,7 +21,7 @@ const userRegistrationFailed = (err) => {
   return {
     type: AUTH.REGISTER_FAILED,
     payload: {
-      error: err.message,
+      error: err,
     },
   };
 };
@@ -31,6 +32,7 @@ export const registerUser = (name, surname, email, password) => {
     try {
       const response = await api.register(name, surname, email, password);
       dispatch(userRegistrationSucceeded(response.token));
+      dispatch(setUserId(response.userId));
     } catch (err) {
       if (err.code === 401) {
         dispatch(logoutUser());
@@ -47,12 +49,11 @@ const loginStarted = () => {
   };
 };
 
-const loginSucceeded = (email, password) => {
+const loginSucceeded = (token) => {
   return {
     type: AUTH.LOGIN_SUCCEEDED,
     payload: {
-      email: email,
-      password: password,
+      token,
     },
   };
 };
@@ -61,7 +62,7 @@ const loginFailed = (err) => {
   return {
     type: AUTH.LOGIN_FAILED,
     payload: {
-      error: err.message,
+      error: err,
     },
   };
 };
@@ -71,7 +72,8 @@ export const loginUser = (email, password) => {
     dispatch(loginStarted());
     try {
       const response = await api.login(email, password);
-      dispatch(loginSucceeded(response));
+      dispatch(loginSucceeded(response.token));
+      dispatch(setUserId(response.userId));
     } catch (err) {
       if (err.code === 401) {
         dispatch(logoutUser());

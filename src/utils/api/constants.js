@@ -3,4 +3,5 @@ export const BASE_API_URL = 'http://localhost/repos/restaurant/restaurant-backen
 export const ENDPOINT = {
   REGISTER: '/user/create.php',
   LOGIN: '/user/login.php',
+  GET_USER: '/user/getUser.php',
 };

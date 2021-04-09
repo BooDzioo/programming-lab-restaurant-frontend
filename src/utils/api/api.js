@@ -1,20 +1,23 @@
 import axios from 'axios';
 import { BASE_API_URL, ENDPOINT } from './constants';
 import { HTTP_METHODS } from '../../constants/constants';
+import store from '../../store/store';
 
 const handleError = (err) => {
   console.warn('error', err);
 };
 
-const apiRequest = async (method, endpoint, body) => {
+const apiRequest = async (method, endpoint, body = {}) => {
   const url = BASE_API_URL + endpoint;
   const parsedBody = JSON.stringify(body);
+  const token = store.getState().auth.token;
   const response = await axios({
     method: method,
     url: url,
     data: parsedBody,
+    header: { Authorization: `Bearer ${token}` },
   });
-  console.log(response);
+  console.log(response.data);
   return response.data;
 };
 
@@ -34,9 +37,19 @@ const login = async (email, password) => {
   });
 };
 
+const getUser = async () => {
+  const token = store.getState().auth.token;
+  const userId = store.getState().user.id;
+  return await apiRequest(HTTP_METHODS.POST, ENDPOINT.GET_USER, {
+    token,
+    userId,
+  });
+};
+
 const api = {
   register,
   login,
+  getUser,
 };
 
 export default api;

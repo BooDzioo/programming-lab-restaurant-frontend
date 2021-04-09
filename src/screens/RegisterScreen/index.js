@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles';
 import FormTextInput from '../../components/FormTextInput';
 import { bindActionCreators } from 'redux';
 import { registerUser } from '../../store/auth/actions';
+import ErrorMessage from '../../components/ErrorMessage';
+import { Redirect } from 'react-router-dom';
 
 const RegisterScreen = (props) => {
   const [name, setName] = useState('');
@@ -11,6 +13,14 @@ const RegisterScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+
+  useEffect(() => {
+    if (!props.registrationPending && props.isLoggedIn && submitted) {
+      setShouldRedirect(true);
+    }
+  }, [props.isLoggedIn, submitted, props.registrationPending]);
 
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
@@ -19,31 +29,41 @@ const RegisterScreen = (props) => {
   const handleRegisterClick = () => {
     if (password === confirmPassword) {
       props.registerUser(name, surname, email, password);
+      setSubmitted(true);
     }
+  };
+
+  const showErrorMessage = () => {
+    return props.registrationFailed && <ErrorMessage message={props.registrationErrorMessage} />;
+  };
+
+  const redirect = () => {
+    return shouldRedirect && <Redirect exact to={'/'} />;
   };
 
   return (
     <div style={styles.container}>
+      <h1>Register</h1>
       <FormTextInput
         name={'name'}
         id={'name'}
         onChange={(e) => handleInputChange(e, setName)}
         value={name}
-        placeholder={'Name'}
+        label={'Name'}
       />
       <FormTextInput
         name={'surname'}
         id={'surname'}
         onChange={(e) => handleInputChange(e, setSurname)}
         value={surname}
-        placeholder={'Surname'}
+        label={'Surname'}
       />
       <FormTextInput
         name={'email'}
         id={'email'}
         onChange={(e) => handleInputChange(e, setEmail)}
         value={email}
-        placeholder={'Email'}
+        label={'Email'}
       />
       <FormTextInput
         type={'password'}
@@ -51,7 +71,7 @@ const RegisterScreen = (props) => {
         id={'password'}
         onChange={(e) => handleInputChange(e, setPassword)}
         value={password}
-        placeholder={'Password'}
+        label={'Password'}
       />
       <FormTextInput
         type={'password'}
@@ -59,15 +79,22 @@ const RegisterScreen = (props) => {
         id={'password'}
         onChange={(e) => handleInputChange(e, setConfirmPassword)}
         value={confirmPassword}
-        placeholder={'Confirm Password'}
+        label={'Confirm Password'}
       />
       <button onClick={handleRegisterClick}>Zarejestruj</button>
+      {showErrorMessage()}
+      {redirect()}
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    isLoggedIn: state.auth.isLoggedIn,
+    registrationPending: state.auth.registrationPending,
+    registrationFailed: state.auth.registrationFailed,
+    registrationErrorMessage: state.auth.registrationErrorMessage,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
