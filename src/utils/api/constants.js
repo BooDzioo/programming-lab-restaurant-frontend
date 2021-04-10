@@ -4,4 +4,5 @@ export const ENDPOINT = {
   REGISTER: '/user/create.php',
   LOGIN: '/user/login.php',
   GET_USER: '/user/getUser.php',
+  CHANGE_PASSWORD: '/user/changePassword.php',
 };

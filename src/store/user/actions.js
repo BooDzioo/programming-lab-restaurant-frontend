@@ -51,3 +51,39 @@ export const setUserId = (id) => {
     },
   };
 };
+
+const changePasswordStarted = () => {
+  return {
+    type: USER.CHANGE_PASSWORD_STARTED,
+  };
+};
+
+const changePasswordSucceeded = () => {
+  return {
+    type: USER.CHANGE_PASSWORD_SUCCEEDED,
+  };
+};
+
+const changePasswordFailed = (err) => {
+  return {
+    type: USER.CHANGE_PASSWORD_FAILED,
+    payload: {
+      error: err,
+    },
+  };
+};
+
+export const changeUserPassword = (oldPassword, newPassword) => {
+  return async (dispatch) => {
+    dispatch(changePasswordStarted());
+    try {
+      const response = await api.changePassword(oldPassword, newPassword);
+      dispatch(changePasswordSucceeded());
+    } catch (err) {
+      if (err.code === 401) {
+        dispatch(logoutUser());
+      }
+      dispatch(changePasswordFailed(err));
+    }
+  };
+};

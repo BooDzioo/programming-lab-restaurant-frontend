@@ -6,7 +6,9 @@ const initialState = {
   surname: '',
   email: '',
   getUserInfoPending: false,
-  getUserInfoErrorMessage: false,
+  getUserInfoErrorMessage: '',
+  changePasswordPending: false,
+  changePasswordErrorMessage: '',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -38,6 +40,24 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         id: action.payload.id,
+      };
+    }
+    case USER.CHANGE_PASSWORD_STARTED: {
+      return {
+        ...state,
+        changePasswordPending: true,
+      };
+    }
+    case USER.CHANGE_PASSWORD_SUCCEEDED: {
+      return {
+        ...state,
+        changePasswordPending: false,
+      };
+    }
+    case USER.CHANGE_PASSWORD_FAILED: {
+      return {
+        ...state,
+        changePasswordErrorMessage: action.payload.error.message,
       };
     }
     default: {

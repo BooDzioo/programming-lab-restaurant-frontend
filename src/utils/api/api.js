@@ -46,10 +46,23 @@ const getUser = async () => {
   });
 };
 
+const changePassword = async (oldPassword, newPassword) => {
+  const token = store.getState().auth.token;
+  const { id: userId, email } = store.getState().user;
+  return await apiRequest(HTTP_METHODS.POST, ENDPOINT.CHANGE_PASSWORD, {
+    token,
+    userId,
+    email,
+    oldPassword,
+    newPassword,
+  });
+};
+
 const api = {
   register,
   login,
   getUser,
+  changePassword,
 };
 
 export default api;
