@@ -8,9 +8,7 @@ export const ROUTES = {
   LOGIN: '/login',
   REGISTER: '/register',
   MENU: '/menu',
-  PANEL: {
-    HOME: '/panel',
-  },
+  PANEL: '/panel',
   ACCOUNT: {
     HOME: '/account',
     CHANGE_PASSWORD: '/account/change_password',

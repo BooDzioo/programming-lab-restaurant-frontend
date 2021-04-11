@@ -28,16 +28,19 @@ const ChangePasswordScreen = (props) => {
       <FormTextInput
         label={'Current Password'}
         value={currentPassword}
+        type={'password'}
         onChange={(e) => handleInputChange(e, setCurrentPassword)}
       />
       <FormTextInput
         label={'New Password'}
         value={newPassword}
+        type={'password'}
         onChange={(e) => handleInputChange(e, setNewPassword)}
       />
       <FormTextInput
         label={'Confirm New Password'}
         value={confirmNewPassword}
+        type={'password'}
         onChange={(e) => handleInputChange(e, setConfirmNewPassword)}
       />
       <button onClick={handleChangePasswordClick} style={styles.button}>

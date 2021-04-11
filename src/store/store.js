@@ -4,8 +4,14 @@ import AUTH from './auth/actionTypes';
 import authReducer from './auth';
 import userReducer from './user';
 import menuReducer from './menu';
+import panelReducer from './panel';
 
-const appReducer = combineReducers({ auth: authReducer, user: userReducer, menu: menuReducer });
+const appReducer = combineReducers({
+  auth: authReducer,
+  user: userReducer,
+  menu: menuReducer,
+  panel: panelReducer,
+});
 
 const rootReducer = (state, action) => {
   if (action.type === AUTH.LOGOUT) {

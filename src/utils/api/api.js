@@ -66,12 +66,33 @@ const getMenu = async () => {
   return await apiRequest(HTTP_METHODS.POST, ENDPOINT.GET_MENU, { userId });
 };
 
+const addUser = async (name, surname, email, password, accountType) => {
+  const userId = store.getState().user.id;
+  return await apiRequest(HTTP_METHODS.POST, ENDPOINT.ADD_USER, {
+    userId,
+    name,
+    surname,
+    email,
+    password,
+    accountType,
+  });
+};
+
+const getAllUsers = async () => {
+  const userId = store.getState().user.id;
+  return await apiRequest(HTTP_METHODS.POST, ENDPOINT.GET_ALL_USERS, {
+    userId,
+  });
+};
+
 const api = {
   register,
   login,
   getUser,
   changePassword,
   getMenu,
+  addUser,
+  getAllUsers,
 };
 
 export default api;

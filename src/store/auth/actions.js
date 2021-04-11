@@ -35,11 +35,7 @@ export const registerUser = (name, surname, email, password) => {
       dispatch(userRegistrationSucceeded(response.token, response.isAdmin));
       dispatch(setUserId(response.userId));
     } catch (err) {
-      if (err.code === 401) {
-        dispatch(logoutUser());
-      } else {
-        dispatch(userRegistrationFailed(err));
-      }
+      dispatch(userRegistrationFailed(err.response.data));
     }
   };
 };
@@ -77,12 +73,7 @@ export const loginUser = (email, password) => {
       dispatch(loginSucceeded(response.token, response.isAdmin));
       dispatch(setUserId(response.userId));
     } catch (err) {
-      if (err.code === 401) {
-        dispatch(logoutUser());
-      } else {
-        console.log(err);
-        dispatch(loginFailed(err));
-      }
+      dispatch(loginFailed(err.response.data));
     }
   };
 };

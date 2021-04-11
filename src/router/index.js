@@ -7,8 +7,8 @@ import LoginScreen from '../screens/LoginScreen';
 import MainScreen from '../screens/MainScreen';
 import { ROUTES } from '../constants/constants';
 import AccountSwitch from './account';
-import PanelSwitch from './panel';
 import MenuScreen from '../screens/MenuScreen';
+import PanelScreen from '../screens/PanelScreen';
 
 const Navigator = (props) => {
   const history = useHistory();
@@ -59,7 +59,7 @@ const Navigator = (props) => {
         <Route exact path={ROUTES.REGISTER} component={RegisterScreen} />
         <Route exact path={ROUTES.LOGIN} component={LoginScreen} />
         <Route exact path={ROUTES.MENU} component={MenuScreen} />
-        <Route exact path={ROUTES.PANEL.HOME} component={PanelSwitch} />
+        <Route exact path={ROUTES.PANEL} component={PanelScreen} />
         <Route path={ROUTES.ACCOUNT.HOME} component={AccountSwitch} />
       </Switch>
     </div>

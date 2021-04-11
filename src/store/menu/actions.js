@@ -1,6 +1,5 @@
 import MENU from './actionTypes';
 import api from '../../utils/api/api';
-import { logoutUser } from '../auth/actions';
 
 const getMenuStarted = () => {
   return {
@@ -33,10 +32,7 @@ export const getMenu = () => {
       const response = await api.getMenu();
       dispatch(getMenuSucceeded(response));
     } catch (err) {
-      if (err.code === 401) {
-        dispatch(logoutUser());
-      }
-      dispatch(getMenuFailed());
+      dispatch(getMenuFailed(err.response.data));
     }
   };
 };

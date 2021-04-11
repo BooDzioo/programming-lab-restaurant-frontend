@@ -22,6 +22,7 @@ const label = {
   lineHeight: 0.9,
   textTransform: 'uppercase',
   letterSpacing: '.15em',
+  minWidth: '200px',
 };
 
 const styles = { input, label };

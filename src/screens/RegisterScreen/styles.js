@@ -3,7 +3,7 @@ import fontSizes from '../../assets/fontSizes';
 
 const container = {
   backgroundColor: COLORS.Nomad,
-  width: '70vh',
+  minWidth: '70vh',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',

@@ -33,12 +33,10 @@ export const getUserInfo = () => {
       const response = await api.getUser();
       dispatch(getUserInfoSucceeded(response));
     } catch (err) {
-      if (err.code === 401) {
+      if (err.response.status === 401 && err.response.data.message === 'Auth token expired') {
         dispatch(logoutUser());
-      } else {
-        console.log(err);
-        dispatch(getUserInfoFailed(err));
       }
+      dispatch(getUserInfoFailed(err.response.data));
     }
   };
 };
@@ -80,10 +78,10 @@ export const changeUserPassword = (oldPassword, newPassword) => {
       const response = await api.changePassword(oldPassword, newPassword);
       dispatch(changePasswordSucceeded());
     } catch (err) {
-      if (err.code === 401) {
+      if (err.response.status === 401 && err.response.data.message === 'Auth token expired') {
         dispatch(logoutUser());
       }
-      dispatch(changePasswordFailed(err));
+      dispatch(changePasswordFailed(err.response.data));
     }
   };
 };
