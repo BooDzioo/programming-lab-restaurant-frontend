@@ -15,7 +15,10 @@ const apiRequest = async (method, endpoint, body = {}) => {
     method: method,
     url: url,
     data: parsedBody,
-    header: { Authorization: `Bearer ${token}` },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    },
   });
   console.log(response.data);
   return response.data;
