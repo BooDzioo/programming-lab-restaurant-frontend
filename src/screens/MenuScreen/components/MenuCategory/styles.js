@@ -13,7 +13,7 @@ const title = {
 
 const container = {
   ...basicStyles.centeringContainer,
-  width: '250px',
+  width: '300px',
   margin: '20px',
 };
 
