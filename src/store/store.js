@@ -1,10 +1,11 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import AUTH from './auth/actionTypes';
 import authReducer from './auth';
 import userReducer from './user';
-import AUTH from './auth/actionTypes';
+import menuReducer from './menu';
 
-const appReducer = combineReducers({ auth: authReducer, user: userReducer });
+const appReducer = combineReducers({ auth: authReducer, user: userReducer, menu: menuReducer });
 
 const rootReducer = (state, action) => {
   if (action.type === AUTH.LOGOUT) {

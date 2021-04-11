@@ -5,4 +5,5 @@ export const ENDPOINT = {
   LOGIN: '/user/login.php',
   GET_USER: '/user/getUser.php',
   CHANGE_PASSWORD: '/user/changePassword.php',
+  GET_MENU: '/menu/get.php',
 };

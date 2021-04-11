@@ -58,11 +58,17 @@ const changePassword = async (oldPassword, newPassword) => {
   });
 };
 
+const getMenu = async () => {
+  const userId = store.getState().user.id;
+  return await apiRequest(HTTP_METHODS.POST, ENDPOINT.GET_MENU, { userId });
+};
+
 const api = {
   register,
   login,
   getUser,
   changePassword,
+  getMenu,
 };
 
 export default api;
