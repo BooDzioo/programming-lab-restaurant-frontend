@@ -5,6 +5,11 @@ const centeringContainer = {
   flexDirection: 'column',
 };
 
-const basicStyles = { centeringContainer };
+const fullWindowContainer = {
+  width: '100%',
+  minHeight: '93vh',
+};
+
+const basicStyles = { centeringContainer, fullWindowContainer };
 
 export default basicStyles;

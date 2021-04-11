@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getMenu } from '../../store/menu/actions';
 import MenuCategory from './components/MenuCategory';
+import styles from './styles';
 
 const MenuScreen = (props) => {
   useEffect(() => {
@@ -17,9 +18,9 @@ const MenuScreen = (props) => {
   };
 
   return (
-    <div>
-      <h1>Menu screen</h1>
-      {showMenuCategories()}
+    <div style={styles.container}>
+      <h1 style={styles.title}>MENU</h1>
+      <div style={styles.categoriesListContainer}>{showMenuCategories()}</div>
     </div>
   );
 };
