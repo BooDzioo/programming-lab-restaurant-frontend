@@ -52,6 +52,18 @@ const panelReducer = (state = initialState(), action) => {
         usersList: action.payload.users,
       };
     }
+    case PANEL.GET_ALL_USERS_CLEAR_ERROR_MESSAGE: {
+      return {
+        ...state,
+        getAllUsersErrorMessage: '',
+      };
+    }
+    case PANEL.ADD_USER_CLEAR_ERROR_MESSAGE: {
+      return {
+        ...state,
+        addUserErrorMessage: '',
+      };
+    }
     default: {
       return {
         ...state,

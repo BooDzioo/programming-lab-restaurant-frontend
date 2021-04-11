@@ -9,6 +9,7 @@ const addUserStarted = () => {
 };
 
 const addUserFailed = (err) => {
+  console.log(err);
   return {
     type: PANEL.ADD_USER_FAILED,
     payload: {
@@ -28,7 +29,7 @@ export const addUser = (name, surname, email, password, accountType) => {
   return async (dispatch) => {
     dispatch(addUserStarted());
     try {
-      const response = api.addUser(name, surname, email, password, accountType);
+      const response = await api.addUser(name, surname, email, password, accountType);
       dispatch(addUserSucceeded());
     } catch (err) {
       console.log('error', err.code);
@@ -40,6 +41,11 @@ export const addUser = (name, surname, email, password, accountType) => {
     }
   };
 };
+export const clearAddUserErrorMessage = () => {
+  return {
+    type: PANEL.ADD_USER_CLEAR_ERROR_MESSAGE,
+  };
+};
 
 const getAllUsersStarted = () => {
   return {
@@ -48,6 +54,7 @@ const getAllUsersStarted = () => {
 };
 
 const getAllUsersFailed = (err) => {
+  console.log(err);
   return {
     type: PANEL.GET_ALL_USERS_FAILED,
     payload: {
@@ -79,5 +86,11 @@ export const getAllUsers = () => {
         dispatch(getAllUsersFailed(err.response.data));
       }
     }
+  };
+};
+
+export const clearGetAllUsersErrorMessage = () => {
+  return {
+    type: PANEL.GET_ALL_USERS_CLEAR_ERROR_MESSAGE,
   };
 };

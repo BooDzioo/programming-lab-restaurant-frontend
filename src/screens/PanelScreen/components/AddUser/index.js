@@ -3,7 +3,9 @@ import FormTextInput from '../../../../components/FormTextInput';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styles from '../../styles';
-import { addUser } from '../../../../store/panel/actions';
+import { addUser, clearAddUserErrorMessage } from '../../../../store/panel/actions';
+import ErrorMessage from '../../../../components/ErrorMessage';
+import ConfirmationMessage from '../../../../components/ConfirmationMessage';
 
 const AddUser = (props) => {
   const [name, setName] = useState('');
@@ -11,64 +13,78 @@ const AddUser = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [accountType, setAccountType] = useState('A');
-  const [commited, setCommited] = useState(false);
+  const [accountType, setAccountType] = useState('B');
+  const [committed, setCommitted] = useState(false);
 
-  console.log(name, surname, email, password, confirmPassword, accountType);
   useEffect(() => {
-    console.log(props.addUserPending, !props.addUserErrorMessage);
-    console.log(!props.addUserPending, !props.addUserErrorMessage, commited);
-    if (!props.addUserPending && !props.addUserErrorMessage && commited) {
-      setName('');
-      setSurname('');
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-      setAccountType('');
-      setCommited(false);
+    if (!props.addUserPending && !props.addUserErrorMessage && committed) {
+      clearForm();
     }
-  }, [props.addUserPending, props.addUserErrorMessage, commited]);
+  }, [props.addUserPending, props.addUserErrorMessage, committed]);
+
+  function clearForm() {
+    setName('');
+    setSurname('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    setAccountType('');
+  }
 
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
+  };
+
+  const handleInputClick = () => {
+    props.clearAddUserErrorMessage();
+    setCommitted(false);
   };
 
   const handleConfirmClick = () => {
     if (name && surname && email && password && confirmPassword && accountType) {
       if (password === confirmPassword) {
         props.addUser(name, surname, email, password, accountType);
-        setCommited(true);
-      } else {
+        setCommitted(true);
       }
-    } else {
-      console.log('not confirmed');
-      console.log(name, surname, email, password, confirmPassword, accountType);
     }
+  };
+
+  const showResult = () => {
+    return props.addUserErrorMessage && committed ? (
+      <ErrorMessage message={props.addUserErrorMessage} />
+    ) : committed ? (
+      <ConfirmationMessage message={'User has been created!'} />
+    ) : null;
   };
 
   return (
     <>
+      <h1 style={styles.title}>Add user</h1>
       <FormTextInput label={'name'} value={name} onChange={(e) => handleInputChange(e, setName)} />
       <FormTextInput
         label={'surname'}
         value={surname}
+        onClick={handleInputClick}
         onChange={(e) => handleInputChange(e, setSurname)}
       />
       <FormTextInput
         label={'email'}
         value={email}
+        onClick={handleInputClick}
         onChange={(e) => handleInputChange(e, setEmail)}
       />
       <FormTextInput
         label={'password'}
         type={'password'}
         value={password}
+        onClick={handleInputClick}
         onChange={(e) => handleInputChange(e, setPassword)}
       />
       <FormTextInput
         label={'confirm password'}
         type={'password'}
         value={confirmPassword}
+        onClick={handleInputClick}
         onChange={(e) => handleInputChange(e, setConfirmPassword)}
       />
       <label style={styles.label}>
@@ -76,12 +92,19 @@ const AddUser = (props) => {
         <select
           defaultValue={accountType}
           style={styles.input}
-          onChange={(e) => handleInputChange(e, setAccountType)}
+          onClick={(e) => {
+            handleInputChange(e, setAccountType);
+            handleInputClick();
+          }}
         >
           <option value={'B'}>Basic (B)</option>
           <option value={'A'}>Admin (A)</option>
         </select>
       </label>
+      {showResult()}
+      <button style={styles.button} onClick={clearForm}>
+        CLEAR
+      </button>
       <button style={styles.button} onClick={handleConfirmClick}>
         CONFIRM
       </button>
@@ -100,6 +123,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       addUser,
+      clearAddUserErrorMessage,
     },
     dispatch,
   );

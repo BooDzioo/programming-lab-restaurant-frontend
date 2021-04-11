@@ -18,6 +18,10 @@ const label = {
   ...styles3.label,
 };
 
-const styles = { container, button, input, label };
+const title = {
+  ...styles2.title,
+};
+
+const styles = { container, button, input, label, title };
 
 export default styles;
