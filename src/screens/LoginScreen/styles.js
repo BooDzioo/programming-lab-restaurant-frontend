@@ -21,7 +21,7 @@ const smallButton = {
   cursor: 'pointer',
   textDecoration: 'none',
   letterSpacing: '.06em',
-  width: '12%',
+  // width: '12%',
   textAlign: 'center',
 };
 

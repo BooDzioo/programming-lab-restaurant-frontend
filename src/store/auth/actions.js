@@ -8,11 +8,12 @@ const userRegistrationStarted = () => {
   };
 };
 
-const userRegistrationSucceeded = (token) => {
+const userRegistrationSucceeded = (token, isAdmin) => {
   return {
     type: AUTH.REGISTER_SUCCEEDED,
     payload: {
       token: token,
+      isAdmin: isAdmin,
     },
   };
 };
@@ -31,7 +32,7 @@ export const registerUser = (name, surname, email, password) => {
     dispatch(userRegistrationStarted());
     try {
       const response = await api.register(name, surname, email, password);
-      dispatch(userRegistrationSucceeded(response.token));
+      dispatch(userRegistrationSucceeded(response.token, response.isAdmin));
       dispatch(setUserId(response.userId));
     } catch (err) {
       if (err.code === 401) {
@@ -49,11 +50,12 @@ const loginStarted = () => {
   };
 };
 
-const loginSucceeded = (token) => {
+const loginSucceeded = (token, isAdmin) => {
   return {
     type: AUTH.LOGIN_SUCCEEDED,
     payload: {
-      token,
+      token: token,
+      isAdmin: isAdmin,
     },
   };
 };
@@ -72,7 +74,7 @@ export const loginUser = (email, password) => {
     dispatch(loginStarted());
     try {
       const response = await api.login(email, password);
-      dispatch(loginSucceeded(response.token));
+      dispatch(loginSucceeded(response.token, response.isAdmin));
       dispatch(setUserId(response.userId));
     } catch (err) {
       if (err.code === 401) {

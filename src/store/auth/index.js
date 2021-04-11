@@ -10,6 +10,7 @@ const initialState = () => {
     loginFailed: false,
     loginErrorMessage: '',
     loginPending: false,
+    isAdmin: false,
   };
 };
 
@@ -30,13 +31,14 @@ const authReducer = (state = initialState(), action) => {
       };
     }
     case AUTH.REGISTER_SUCCEEDED: {
-      const { token } = action.payload;
+      const { token, isAdmin } = action.payload;
       localStorage.setItem('token', token);
       return {
         ...state,
         registerPending: false,
         token: token,
         isLoggedIn: true,
+        isAdmin: isAdmin,
       };
     }
     case AUTH.LOGIN_STARTED: {
@@ -54,13 +56,14 @@ const authReducer = (state = initialState(), action) => {
       };
     }
     case AUTH.LOGIN_SUCCEEDED: {
-      const { token } = action.payload;
+      const { token, isAdmin } = action.payload;
       localStorage.setItem('token', token);
       return {
         ...state,
         loginPending: false,
         token: token,
         isLoggedIn: true,
+        isAdmin: isAdmin,
       };
     }
     default: {

@@ -7,6 +7,7 @@ import LoginScreen from '../screens/LoginScreen';
 import MainScreen from '../screens/MainScreen';
 import { ROUTES } from '../constants/constants';
 import AccountSwitch from './account';
+import PanelSwitch from './panel';
 import MenuScreen from '../screens/MenuScreen';
 
 const Navigator = (props) => {
@@ -32,6 +33,13 @@ const Navigator = (props) => {
                 Menu
               </Link>
             </li>
+            {props.isAdmin && (
+              <li style={styles.navItem}>
+                <Link style={styles.link} to={ROUTES.PANEL}>
+                  Panel
+                </Link>
+              </li>
+            )}
             <li style={styles.loginButton}>
               {props.isLoggedIn ? (
                 <Link style={styles.link} to={ROUTES.ACCOUNT.HOME}>
@@ -51,6 +59,7 @@ const Navigator = (props) => {
         <Route exact path={ROUTES.REGISTER} component={RegisterScreen} />
         <Route exact path={ROUTES.LOGIN} component={LoginScreen} />
         <Route exact path={ROUTES.MENU} component={MenuScreen} />
+        <Route exact path={ROUTES.PANEL.HOME} component={PanelSwitch} />
         <Route path={ROUTES.ACCOUNT.HOME} component={AccountSwitch} />
       </Switch>
     </div>
@@ -60,6 +69,7 @@ const Navigator = (props) => {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.auth.isLoggedIn,
+    isAdmin: state.auth.isAdmin,
   };
 };
 
