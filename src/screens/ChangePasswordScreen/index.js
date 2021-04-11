@@ -3,6 +3,7 @@ import FormTextInput from '../../components/FormTextInput';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeUserPassword } from '../../store/user/actions';
+import styles from './styles';
 
 const ChangePasswordScreen = (props) => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -23,6 +24,7 @@ const ChangePasswordScreen = (props) => {
 
   return (
     <>
+      <h1 style={styles.title}>Change password</h1>
       <FormTextInput
         label={'Current Password'}
         value={currentPassword}
@@ -38,7 +40,9 @@ const ChangePasswordScreen = (props) => {
         value={confirmNewPassword}
         onChange={(e) => handleInputChange(e, setConfirmNewPassword)}
       />
-      <button onClick={handleChangePasswordClick}>Change password</button>
+      <button onClick={handleChangePasswordClick} style={styles.button}>
+        Change password
+      </button>
     </>
   );
 };

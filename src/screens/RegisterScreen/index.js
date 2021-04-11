@@ -43,7 +43,7 @@ const RegisterScreen = (props) => {
 
   return (
     <div style={styles.container}>
-      <h1>Register</h1>
+      <h1 style={styles.title}>REGISTER</h1>
       <FormTextInput
         name={'name'}
         id={'name'}
@@ -81,7 +81,9 @@ const RegisterScreen = (props) => {
         value={confirmPassword}
         label={'Confirm Password'}
       />
-      <button onClick={handleRegisterClick}>Zarejestruj</button>
+      <button onClick={handleRegisterClick} style={styles.button}>
+        REGISTER
+      </button>
       {showErrorMessage()}
       {redirect()}
     </div>

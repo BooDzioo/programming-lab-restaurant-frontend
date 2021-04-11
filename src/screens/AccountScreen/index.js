@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import FormTextInput from '../../components/FormTextInput';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../constants/constants';
+import styles from './styles';
 
 const AccountScreen = (props) => {
   const history = useHistory();
@@ -20,12 +21,16 @@ const AccountScreen = (props) => {
 
   return (
     <>
-      <h1>Account</h1>
+      <h1 style={styles.title}>Account</h1>
       <FormTextInput value={props.name} label={'Name'} disabled />
       <FormTextInput value={props.surname} label={'Surname'} disabled />
       <FormTextInput value={props.email} label={'Email'} disabled />
-      <button onClick={onChangePasswordClick}>Change Password</button>
-      <button onClick={props.logoutUser}>Logout</button>
+      <button onClick={onChangePasswordClick} style={styles.button}>
+        Change Password
+      </button>
+      <button onClick={props.logoutUser} style={styles.button}>
+        Logout
+      </button>
     </>
   );
 };

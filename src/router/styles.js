@@ -3,7 +3,7 @@ import basicStyles from '../assets/basicStyles';
 
 const container = {
   ...basicStyles.centeringContainer,
-  backgroundColor: 'green',
+  backgroundColor: '#f1a972',
   paddingTop: '7vh',
   width: '100%',
   minHeight: '100%',

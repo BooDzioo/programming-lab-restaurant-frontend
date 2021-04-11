@@ -42,7 +42,7 @@ const description = {
   color: '#938372',
   marginLeft: '5px',
   marginTop: 3,
-  fontSize: fontSizes.small,
+  fontSize: fontSizes.smaller,
   fontWeight: 400,
   lineHeight: 1.5,
 };

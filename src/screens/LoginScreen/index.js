@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import styles from '../RegisterScreen/styles';
+import styles from './styles';
 import FormTextInput from '../../components/FormTextInput';
 import { bindActionCreators } from 'redux';
 import { loginUser } from '../../store/auth/actions';
@@ -38,7 +38,7 @@ const LoginScreen = (props) => {
 
   return (
     <div style={styles.container}>
-      <h1>Login</h1>
+      <h1 style={styles.title}>Login</h1>
       <FormTextInput
         name={'email'}
         id={'email'}
@@ -54,8 +54,13 @@ const LoginScreen = (props) => {
         value={password}
         label={'Password'}
       />
-      <button onClick={handleLoginClick}>Zaloguj</button> <br />
-      <Link to={'./register'}>Zarejestruj</Link>
+      <button onClick={handleLoginClick} style={styles.button}>
+        Zaloguj
+      </button>{' '}
+      <br />
+      <Link to={'./register'} style={styles.smallButton}>
+        Zarejestruj
+      </Link>
       {showErrorMessage()}
       {redirect()}
     </div>
