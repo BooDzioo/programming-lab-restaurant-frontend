@@ -1,17 +1,19 @@
 import AUTH from './actionTypes';
 
-const initialState = {
-  token: '',
-  registrationFailed: false,
-  registrationErrorMessage: '',
-  registrationPending: false,
-  isLoggedIn: false,
-  loginFailed: false,
-  loginErrorMessage: '',
-  loginPending: false,
+const initialState = () => {
+  return {
+    token: localStorage.getItem('token') ?? '',
+    isLoggedIn: !!localStorage.getItem('token'),
+    registrationFailed: false,
+    registrationErrorMessage: '',
+    registrationPending: false,
+    loginFailed: false,
+    loginErrorMessage: '',
+    loginPending: false,
+  };
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState(), action) => {
   switch (action.type) {
     case AUTH.REGISTER_STARTED: {
       return {
@@ -29,6 +31,7 @@ const authReducer = (state = initialState, action) => {
     }
     case AUTH.REGISTER_SUCCEEDED: {
       const { token } = action.payload;
+      localStorage.setItem('token', token);
       return {
         ...state,
         registerPending: false,
@@ -52,6 +55,7 @@ const authReducer = (state = initialState, action) => {
     }
     case AUTH.LOGIN_SUCCEEDED: {
       const { token } = action.payload;
+      localStorage.setItem('token', token);
       return {
         ...state,
         loginPending: false,

@@ -3,7 +3,7 @@ const AUTH = {
   REGISTER_FAILED: 'auth/register_failed',
   REGISTER_SUCCEEDED: 'auth/register_succeeded',
   LOGIN_STARTED: 'auth/login_started',
-  LOGIN_FAILED: 'auth/login-failed',
+  LOGIN_FAILED: 'auth/login_failed',
   LOGIN_SUCCEEDED: 'auth/login_succeeded',
   LOGOUT: 'auth/logout',
 };

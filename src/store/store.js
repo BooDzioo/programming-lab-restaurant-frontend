@@ -8,6 +8,8 @@ const appReducer = combineReducers({ auth: authReducer, user: userReducer });
 
 const rootReducer = (state, action) => {
   if (action.type === AUTH.LOGOUT) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     state = undefined;
   }
   return appReducer(state, action);

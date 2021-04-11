@@ -1,17 +1,19 @@
 import USER from './actionTypes';
 
-const initialState = {
-  id: '',
-  name: '',
-  surname: '',
-  email: '',
-  getUserInfoPending: false,
-  getUserInfoErrorMessage: '',
-  changePasswordPending: false,
-  changePasswordErrorMessage: '',
+const initialState = () => {
+  return {
+    id: localStorage.getItem('userId') ?? '',
+    name: '',
+    surname: '',
+    email: '',
+    getUserInfoPending: false,
+    getUserInfoErrorMessage: '',
+    changePasswordPending: false,
+    changePasswordErrorMessage: '',
+  };
 };
 
-const userReducer = (state = initialState, action) => {
+const userReducer = (state = initialState(), action) => {
   switch (action.type) {
     case USER.GET_INFO_STARTED: {
       return {
@@ -37,9 +39,11 @@ const userReducer = (state = initialState, action) => {
       };
     }
     case USER.SET_ID: {
+      const userId = action.payload.id;
+      localStorage.setItem('userId', userId);
       return {
         ...state,
-        id: action.payload.id,
+        id: userId,
       };
     }
     case USER.CHANGE_PASSWORD_STARTED: {
