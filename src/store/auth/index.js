@@ -66,6 +66,20 @@ const authReducer = (state = initialState(), action) => {
         isAdmin: isAdmin,
       };
     }
+    case AUTH.REFRESH_TOKEN_STARTED: {
+      return {
+        ...state,
+      };
+    }
+    case AUTH.REFRESH_TOKEN_SUCCEEDED: {
+      const { token, isAdmin } = action.payload;
+      localStorage.setItem('token', token);
+      return {
+        ...state,
+        token: token,
+        isAdmin: isAdmin,
+      };
+    }
     default: {
       return state;
     }

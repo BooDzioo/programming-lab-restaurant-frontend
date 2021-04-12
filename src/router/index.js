@@ -9,6 +9,8 @@ import { ROUTES } from '../constants/constants';
 import AccountSwitch from './account';
 import MenuScreen from '../screens/MenuScreen';
 import PanelScreen from '../screens/PanelScreen';
+import { bindActionCreators } from 'redux';
+import { refreshToken } from '../store/auth/actions';
 
 const Navigator = (props) => {
   const history = useHistory();
@@ -17,6 +19,10 @@ const Navigator = (props) => {
       history.replace('/');
     }
   }, [props.isLoggedIn]);
+
+  useEffect(() => {
+    props.refreshToken();
+  }, []);
 
   return (
     <div style={styles.container}>
@@ -73,4 +79,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Navigator);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      refreshToken,
+    },
+    dispatch,
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigator);

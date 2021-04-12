@@ -3,6 +3,8 @@ import styles3 from '../../components/FormTextInput/styles';
 
 const container = {
   ...styles2.container,
+  width: '100%',
+  minHeight: '97vh',
 };
 
 const button = {

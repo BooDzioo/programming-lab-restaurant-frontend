@@ -85,6 +85,13 @@ const getAllUsers = async () => {
   });
 };
 
+const refreshToken = async () => {
+  const userId = store.getState().user.id;
+  return await apiRequest(HTTP_METHODS.POST, ENDPOINT.REFRESH_TOKEN, {
+    userId,
+  });
+};
+
 const api = {
   register,
   login,
@@ -93,6 +100,7 @@ const api = {
   getMenu,
   addUser,
   getAllUsers,
+  refreshToken,
 };
 
 export default api;

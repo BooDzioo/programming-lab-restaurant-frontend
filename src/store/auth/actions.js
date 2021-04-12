@@ -83,3 +83,32 @@ export const logoutUser = () => {
     type: AUTH.LOGOUT,
   };
 };
+
+const refreshTokeStarted = () => {
+  return {
+    type: AUTH.REGISTER_STARTED,
+  };
+};
+
+const refreshTokenSucceeded = (token, isAdmin) => {
+  console.log('succeded');
+  return {
+    type: AUTH.REFRESH_TOKEN_SUCCEEDED,
+    payload: {
+      token: token,
+      isAdmin: isAdmin,
+    },
+  };
+};
+
+export const refreshToken = () => {
+  return async (dispatch) => {
+    dispatch(refreshTokeStarted());
+    try {
+      const response = await api.refreshToken();
+      dispatch(refreshTokenSucceeded(response.token, response.isAdmin));
+    } catch (err) {
+      dispatch(logoutUser());
+    }
+  };
+};

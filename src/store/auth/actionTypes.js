@@ -6,6 +6,8 @@ const AUTH = {
   LOGIN_FAILED: 'auth/login_failed',
   LOGIN_SUCCEEDED: 'auth/login_succeeded',
   LOGOUT: 'auth/logout',
+  REFRESH_TOKEN_STARTED: 'auth/refresh_token_started',
+  REFRESH_TOKEN_SUCCEEDED: 'auth/refresh_token_succeeded',
 };
 
 export default AUTH;

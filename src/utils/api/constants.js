@@ -8,4 +8,5 @@ export const ENDPOINT = {
   GET_MENU: '/menu/get.php',
   ADD_USER: '/user/add_user.php',
   GET_ALL_USERS: '/user/get_all_users.php',
+  REFRESH_TOKEN: '/user/refreshToken.php',
 };
