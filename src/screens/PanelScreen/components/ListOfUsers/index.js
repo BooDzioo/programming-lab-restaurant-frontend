@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getAllUsers, deleteUser } from '../../../../store/panel/actions';
+import {
+  getAllUsers,
+  deleteUser,
+  clearGetAllUsersErrorMessage,
+} from '../../../../store/panel/actions';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import './styles.css';
 import styles from '../../styles';
@@ -20,6 +24,7 @@ const ListOfUsers = (props) => {
   };
 
   const handleDeleteClick = (id) => {
+    props.clearGetAllUsersErrorMessage();
     props.deleteUser(id);
   };
 
@@ -55,12 +60,11 @@ const ListOfUsers = (props) => {
     }
   };
 
-  console.log('getAllUsers', props.usersList, props.getAllUsersErrorMessage);
   return (
     <>
       <h1 style={styles.title}>LIST OF USERS</h1>
-      {showTable()}
       {showErrorMessage()}
+      {showTable()}
     </>
   );
 };
@@ -79,6 +83,7 @@ const mapDispatchToProps = (dispatch) => {
     {
       getAllUsers,
       deleteUser,
+      clearGetAllUsersErrorMessage,
     },
     dispatch,
   );

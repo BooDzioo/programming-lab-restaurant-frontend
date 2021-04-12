@@ -9,7 +9,6 @@ const addUserStarted = () => {
 };
 
 const addUserFailed = (err) => {
-  console.log(err);
   return {
     type: PANEL.ADD_USER_FAILED,
     payload: {
@@ -25,19 +24,17 @@ const addUserSucceeded = () => {
 };
 
 export const addUser = (name, surname, email, password, accountType) => {
-  console.log(name, surname, email, password, accountType);
   return async (dispatch) => {
     dispatch(addUserStarted());
     try {
       const response = await api.addUser(name, surname, email, password, accountType);
       dispatch(addUserSucceeded());
     } catch (err) {
-      console.log('error', err.code);
       if (err.response.status === 401 && err.response.data.message === 'Auth token expired') {
         dispatch(logoutUser());
-        console.log(err.code);
+      } else {
+        dispatch(addUserFailed(err.response.data));
       }
-      dispatch(addUserFailed(err.response.data));
     }
   };
 };
@@ -54,7 +51,6 @@ const getAllUsersStarted = () => {
 };
 
 const getAllUsersFailed = (err) => {
-  console.log(err);
   return {
     type: PANEL.GET_ALL_USERS_FAILED,
     payload: {
@@ -80,7 +76,6 @@ export const getAllUsers = () => {
       dispatch(getAllUsersSucceeded(response));
     } catch (err) {
       if (err.response.status === 401 && err.response.data.message === 'Auth token expired') {
-        console.log('logout');
         dispatch(logoutUser());
       } else {
         dispatch(getAllUsersFailed(err.response.data));
@@ -126,7 +121,7 @@ export const deleteUser = (requestedUser) => {
       if (err.response?.status === 401 && err.response.data.message === 'Auth token expired') {
         dispatch(logoutUser());
       } else {
-        dispatch(deleteUserFailed(err));
+        dispatch(deleteUserFailed(err.response.data));
       }
     }
   };

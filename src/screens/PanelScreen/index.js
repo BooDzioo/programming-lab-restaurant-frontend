@@ -24,7 +24,7 @@ const PanelScreen = (props) => {
         result = (
           <>
             <option value={'user/add'}>Add</option>
-            <option value={'user/list'}>List (update, delete)</option>
+            <option value={'user/list'}>List (delete)</option>
           </>
         );
         break;

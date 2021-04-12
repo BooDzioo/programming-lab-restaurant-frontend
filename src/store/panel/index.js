@@ -76,13 +76,13 @@ const panelReducer = (state = initialState(), action) => {
       return {
         ...state,
         deleteUserPending: false,
+        getAllUsersErrorMessage: action.payload.error.message,
       };
     }
     case PANEL.DELETE_USER_SUCCEEDED: {
       return {
         ...state,
         deleteUserPending: false,
-        deleteUserErrorMessage: action.payload.error.message,
       };
     }
     default: {

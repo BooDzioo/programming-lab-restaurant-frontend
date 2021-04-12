@@ -91,7 +91,6 @@ const refreshTokeStarted = () => {
 };
 
 const refreshTokenSucceeded = (token, isAdmin) => {
-  console.log('succeded');
   return {
     type: AUTH.REFRESH_TOKEN_SUCCEEDED,
     payload: {
