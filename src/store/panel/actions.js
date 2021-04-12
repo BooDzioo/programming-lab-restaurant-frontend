@@ -94,3 +94,40 @@ export const clearGetAllUsersErrorMessage = () => {
     type: PANEL.GET_ALL_USERS_CLEAR_ERROR_MESSAGE,
   };
 };
+
+const deleteUserStarted = () => {
+  return {
+    type: PANEL.DELETE_USER_STARTED,
+  };
+};
+
+const deleteUserFailed = (err) => {
+  return {
+    type: PANEL.DELETE_USER_FAILED,
+    payload: {
+      error: err,
+    },
+  };
+};
+
+const deleteUserSucceeded = () => {
+  return {
+    type: PANEL.DELETE_USER_SUCCEEDED,
+  };
+};
+
+export const deleteUser = (requestedUser) => {
+  return async (dispatch) => {
+    dispatch(deleteUserStarted());
+    try {
+      const response = await api.deleteUser(requestedUser);
+      dispatch(deleteUserSucceeded());
+    } catch (err) {
+      if (err.response?.status === 401 && err.response.data.message === 'Auth token expired') {
+        dispatch(logoutUser());
+      } else {
+        dispatch(deleteUserFailed(err));
+      }
+    }
+  };
+};

@@ -1,20 +1,26 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getAllUsers } from '../../../../store/panel/actions';
+import { getAllUsers, deleteUser } from '../../../../store/panel/actions';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import './styles.css';
 import styles from '../../styles';
 
 const ListOfUsers = (props) => {
   useEffect(() => {
-    props.getAllUsers();
-  }, []);
+    if (!props.deleteUserPending) {
+      props.getAllUsers();
+    }
+  }, [props.deleteUserPending]);
 
   const showErrorMessage = () => {
     return (
       props.getAllUsersErrorMessage && <ErrorMessage message={props.getAllUsersErrorMessage} />
     );
+  };
+
+  const handleDeleteClick = (id) => {
+    props.deleteUser(id);
   };
 
   const showTable = () => {
@@ -25,6 +31,7 @@ const ListOfUsers = (props) => {
           {keys.map((item, index) => {
             return <th key={index}>{item}</th>;
           })}
+          <th>delete</th>
         </tr>
       );
       const content = props.usersList.map((user, index) => {
@@ -33,6 +40,9 @@ const ListOfUsers = (props) => {
             {keys.map((item, index) => {
               return <td key={index}>{user[item]}</td>;
             })}
+            <td>
+              <button onClick={() => handleDeleteClick(user.user_id)}>delete</button>
+            </td>
           </tr>
         );
       });
@@ -59,6 +69,8 @@ const mapStateToProps = (state) => {
   return {
     usersList: state.panel.usersList,
     getAllUsersErrorMessage: state.panel.getAllUsersErrorMessage,
+    deleteUserPending: state.panel.deleteUserPending,
+    deleteUserErrorMessage: state.panel.deleteUserErrorMessage,
   };
 };
 
@@ -66,6 +78,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       getAllUsers,
+      deleteUser,
     },
     dispatch,
   );

@@ -28,7 +28,7 @@ const AddUser = (props) => {
     setEmail('');
     setPassword('');
     setConfirmPassword('');
-    setAccountType('');
+    setAccountType('B');
   }
 
   const handleInputChange = (e, setter) => {

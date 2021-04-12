@@ -92,6 +92,14 @@ const refreshToken = async () => {
   });
 };
 
+const deleteUser = async (requestedUser) => {
+  const userId = store.getState().user.id;
+  return await apiRequest(HTTP_METHODS.POST, ENDPOINT.DELETE_USER, {
+    userId,
+    requestedUser,
+  });
+};
+
 const api = {
   register,
   login,
@@ -101,6 +109,7 @@ const api = {
   addUser,
   getAllUsers,
   refreshToken,
+  deleteUser,
 };
 
 export default api;

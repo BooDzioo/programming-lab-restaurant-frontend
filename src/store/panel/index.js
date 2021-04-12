@@ -6,6 +6,8 @@ const initialState = () => {
     addUserErrorMessage: '',
     getAllUsersPending: false,
     getAllUsersErrorMessage: '',
+    deleteUserPending: false,
+    deleteUserErrorMessage: '',
     usersList: [],
   };
 };
@@ -62,6 +64,25 @@ const panelReducer = (state = initialState(), action) => {
       return {
         ...state,
         addUserErrorMessage: '',
+      };
+    }
+    case PANEL.DELETE_USER_STARTED: {
+      return {
+        ...state,
+        deleteUserPending: true,
+      };
+    }
+    case PANEL.DELETE_USER_FAILED: {
+      return {
+        ...state,
+        deleteUserPending: false,
+      };
+    }
+    case PANEL.DELETE_USER_SUCCEEDED: {
+      return {
+        ...state,
+        deleteUserPending: false,
+        deleteUserErrorMessage: action.payload.error.message,
       };
     }
     default: {
